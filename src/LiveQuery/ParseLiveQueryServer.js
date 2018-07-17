@@ -53,6 +53,7 @@ class ParseLiveQueryServer {
       config.websocketTimeout
     );
 
+    logger.verbose('here');
     // Initialize subscriber
     this.subscriber = ParsePubSub.createSubscriber(config);
     this.subscriber.subscribe(Parse.applicationId + 'afterSave');
@@ -70,8 +71,10 @@ class ParseLiveQueryServer {
       }
       this._inflateParseObject(message);
       if (channel === Parse.applicationId + 'afterSave') {
+        logger.debug('this._onAfterSave(message);')
         this._onAfterSave(message);
       } else if (channel === Parse.applicationId + 'afterDelete') {
+        logger.debug('this._onAfterDelete(message);')
         this._onAfterDelete(message);
       } else {
         logger.error('Get message %s from unknown channel %j', message, channel);
